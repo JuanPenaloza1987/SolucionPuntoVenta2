@@ -104,7 +104,7 @@
             this.btnEntrar.Location = new System.Drawing.Point(61, 214);
             this.btnEntrar.Name = "btnEntrar";
             this.btnEntrar.Size = new System.Drawing.Size(109, 24);
-            this.btnEntrar.TabIndex = 15;
+            this.btnEntrar.TabIndex = 4;
             this.btnEntrar.Text = "Entrar";
             this.btnEntrar.UseVisualStyleBackColor = true;
             this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
@@ -114,7 +114,7 @@
             this.btnSalir.Location = new System.Drawing.Point(176, 214);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(114, 24);
-            this.btnSalir.TabIndex = 16;
+            this.btnSalir.TabIndex = 5;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
@@ -125,7 +125,7 @@
             this.cmbAlmacen.Location = new System.Drawing.Point(176, 176);
             this.cmbAlmacen.Name = "cmbAlmacen";
             this.cmbAlmacen.Size = new System.Drawing.Size(145, 21);
-            this.cmbAlmacen.TabIndex = 17;
+            this.cmbAlmacen.TabIndex = 3;
             // 
             // label3
             // 

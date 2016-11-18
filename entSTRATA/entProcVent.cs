@@ -60,6 +60,7 @@ namespace STRATA.Entities
         public int ven_docnumsap { get; set; }
         public string ven_groupnum { get; set; }
         public int ven_keypos { get; set; }
+        public string ven_serie { get; set; }
         #endregion
 
         #region methods
@@ -71,7 +72,7 @@ namespace STRATA.Entities
             string ven_motcan, string ven_coment, string ven_webIde, int ven_docsap, string ven_msjErr, string ven_eqenvi, string ven_macadd, string ven_ipenvi, bool ven_enviad,
             DateTime ven_fecenv, int ven_keycot, string ven_formapago, string ven_metodopago, int ven_metododet, string ven_metodoref, int ven_keycor, bool ven_enviadobita,
             string ven_xml, string ven_pac, string ven_timacuse, DateTime ven_timfeccan, string ven_timusrcan, string ven_keyser, string ven_nomser, string ven_keyase,
-            string ven_referencia, int ven_docnumsap, string ven_groupnum, int ven_keypos)
+            string ven_referencia, int ven_docnumsap, string ven_groupnum, int ven_keypos,string ven_serie)
         {
             this.ven_keyven = ven_keyven;
             this.ven_caja = ven_caja;
@@ -124,6 +125,7 @@ namespace STRATA.Entities
             this.ven_docnumsap = ven_docnumsap;
             this.ven_groupnum = ven_groupnum;
             this.ven_keypos = ven_keypos;
+            this.ven_serie = ven_serie;
         }
         #endregion
     }

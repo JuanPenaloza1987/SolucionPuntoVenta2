@@ -105,6 +105,7 @@ namespace AppPuntoVenta.Seguridad.Vista
                 {
                     Sesion.CuentaContable = item["par_cuenta"].ToString();
                     Sesion.CentroCostos = item["par_PrcCode"].ToString();
+                    Sesion.Serie = item["par_serie"].ToString();
                 }
             }
             else if (!string.IsNullOrEmpty(dat.mensaje))

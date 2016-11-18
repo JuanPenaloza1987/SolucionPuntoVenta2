@@ -22,6 +22,7 @@ namespace AppPuntoVenta
         public static string Almacen;
         public static string CuentaContable;
         public static string CentroCostos;
+        public static string Serie;
         public static List<clsPermisos> Permisos;
         public static List<Entidades.Promocion> Promociones { get; set; }
         public static string RutaLogo = "C:/STRATA_POS/Logo.jpg";

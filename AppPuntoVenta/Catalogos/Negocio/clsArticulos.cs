@@ -636,7 +636,7 @@ namespace AppPuntoVenta.Catalogos.Negocio
             BD Objeto = new BD();
             DataSet Usuario = new DataSet();
             
-            Objeto.sentenciaSQL = "SELECT art_keyart, art_descripc FROM cataarti WHERE art_keyart LIKE '%" + dato + "%' OR art_descripc LIKE '%" + dato + "%' ORDER BY art_keyart DESC";
+            Objeto.sentenciaSQL = "SELECT art_keyart, art_descripc FROM cataarti WHERE art_keyart LIKE '%" + dato + "%' OR art_descripc LIKE '%" + dato + "%' OR art_codBar LIKE '%" + dato + "%' ORDER BY art_keyart DESC";
             Usuario = Objeto.ejecutaConsulta();
             if (!Objeto.hayError)
             {

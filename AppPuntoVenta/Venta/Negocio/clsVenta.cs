@@ -61,7 +61,7 @@ namespace SRATAPV.Ventas.Negocio
         private string _ven_keyase;
         private string _ven_referencia;
         private string _ven_groupnum;
-
+        private string _ven_serie;
         private string _ven_keycor;
 
         private string _sucursal;
@@ -416,6 +416,12 @@ namespace SRATAPV.Ventas.Negocio
         {
             get { return _ven_keycor; }
             set { _ven_keycor = value; }
+        }
+
+        public string ven_serie
+        {
+            get { return _ven_serie; }
+            set { _ven_serie = value; }
         }
 
         #endregion
@@ -917,7 +923,7 @@ namespace SRATAPV.Ventas.Negocio
         {
             BD Objeto = new BD();
 
-            Objeto.sentenciaSQL = "INSERT INTO procvent(ven_caja,ven_usrven,ven_cliente,ven_estado,ven_fecdoc,ven_fecreg,ven_iva,ven_ieps,ven_retencion,ven_descue,ven_subtot,ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion,ven_almace,ven_coment,ven_webIde,ven_docsap,ven_enviad,ven_keycot,ven_formapago,ven_metodopago,ven_metododet,ven_metodoref,ven_keycor,ven_enviadobita,ven_keyser,ven_nomser,ven_keyase,ven_referencia,ven_groupnum)" +
+            Objeto.sentenciaSQL = "INSERT INTO procvent(ven_caja,ven_usrven,ven_cliente,ven_estado,ven_fecdoc,ven_fecreg,ven_iva,ven_ieps,ven_retencion,ven_descue,ven_subtot,ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion,ven_almace,ven_coment,ven_webIde,ven_docsap,ven_enviad,ven_keycot,ven_formapago,ven_metodopago,ven_metododet,ven_metodoref,ven_keycor,ven_enviadobita,ven_keyser,ven_nomser,ven_keyase,ven_referencia,ven_groupnum,ven_serie)" +
                 " VALUES(" + ven_caja +
                 "," + ven_usrven +
                 "," + ven_cliente +
@@ -949,7 +955,8 @@ namespace SRATAPV.Ventas.Negocio
                 "," + ven_nomser +
                 "," + ven_keyase +
                 "," + ven_referencia +
-                "," + ven_groupnum + ")";
+                "," + ven_groupnum + 
+                "," + ven_serie + ")";
 
 
             Objeto.ejecutaConsulta();
@@ -1092,8 +1099,8 @@ namespace SRATAPV.Ventas.Negocio
                                      "GETDATE()," +
                                      "'" + ven4_formapago + "'," +
                                      "'" + ven4_terminal + "'," +
-                                     "11011010000," +
-		                                "NULL," +
+                                     ""+ ven4_cuenta + "," +
+                                        "NULL," +
 		                                "NULL," +
 		                                "NULL," +
 		                                "NULL," +

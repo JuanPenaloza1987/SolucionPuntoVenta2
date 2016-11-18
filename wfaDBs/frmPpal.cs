@@ -19,6 +19,8 @@ using System.Data.SqlClient;
 using AppPuntoVenta;
 using STRATA.wfaDBs;
 
+
+
 namespace wfaDBs
 {
     public partial class frmPpal : Form
@@ -28,6 +30,8 @@ namespace wfaDBs
         public List<entProcVent> lstVns = new List<entProcVent>();
         public List<entProcVent1> lstDvl = new List<entProcVent1>();
         public List<entProcVent1> lstDvs = new List<entProcVent1>();
+        public List<entProcVent4> lstVnl4 = new List<entProcVent4>();
+        public List<entProcVentP> lstVnsP = new List<entProcVentP>();
         public List<int> lstKey;
         public List<entPerfPerm> lstPERFPERM = new List<entPerfPerm>();
         public List<entSeguUsua> lstSEGUUSUA = new List<entSeguUsua>();
@@ -51,6 +55,7 @@ namespace wfaDBs
         public entCataAlma entCALM;
         public entCataMeto1 entCMET1;
         public entProcVentP entPVP;
+        public entProcVent4 entVnl4;
 
         public bool envio = false;
 
@@ -696,7 +701,7 @@ namespace wfaDBs
                         }
                         DataRow dr = dt.Tables[0].Rows[0];
                         SqlAction = "INSERT INTO [confpara] ([par_nomemp],[par_impuesto],[par_ieps],[par_tipoCambio],[par_keysuc],[par_dirrfc],[par_dircalle]," +
-                            "[par_dirnumero],[par_dircolonia],[par_dirciudad],[par_direstado],[par_dirpais],[par_dircodposta],[par_dirtelefono],[par_expecalle],[par_expenumero],[par_expecolonia],[par_expemunicipio],[par_expeestado],[par_expepais],[par_cuenta],[par_PrcCode])" +
+                            "[par_dirnumero],[par_dircolonia],[par_dirciudad],[par_direstado],[par_dirpais],[par_dircodposta],[par_dirtelefono],[par_expecalle],[par_expenumero],[par_expecolonia],[par_expemunicipio],[par_expeestado],[par_expepais],[par_cuenta],[par_PrcCode],[par_serie])" +
                           "VALUES (" +
                           "'" + dr["par_nomemp"].ToString() + "'" +
                           ",'" + dr["par_impuesto"].ToString() + "'" +
@@ -719,7 +724,8 @@ namespace wfaDBs
                          ",'" + dr["par_expeestado"].ToString() + "'" +
                          ",'" + dr["par_expepais"].ToString() + "'" +
                          ",'" + dr["par_cuenta"].ToString() + "'" +
-                         ",'" + dr["par_PrcCode"].ToString() + "')";
+                         ",'" + dr["par_PrcCode"].ToString() + "'"+
+                        ",'" + dr["par_serie"].ToString() + "')";
                         using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
                         {
                             cmd.ExecuteNonQuery();
@@ -1238,7 +1244,7 @@ namespace wfaDBs
                                         ",'" + dr["venp_artdes"].ToString() + "'" +
                                         ",'" + dr["venp_cantidad"].ToString() + "'" +
                                         ",'" + dr["venp_precio"].ToString() + "'" +
-                                        "'" + dr["venp_iva"].ToString() + "'" +
+                                        ",'" + dr["venp_iva"].ToString() + "'" +
                                         ",'" + dr["venp_ieps"].ToString() + "'" +
                                         ",'" + dr["venp_totallinea"].ToString() + "'" +
                                         ",'" + dr["venp_moneda"].ToString() + "'" +
@@ -1320,6 +1326,7 @@ namespace wfaDBs
 
         private void SincronizarPerfPerm()
         {
+            lstPERFPERM = new List<entPerfPerm>();
             string con = txtPatCpu.Text;
             con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;"; //txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
             try
@@ -1354,6 +1361,7 @@ namespace wfaDBs
             {
                 string error = string.Empty;
                 error = ex.Message;
+                MessageBox.Show(error, "Error ", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             if (lstPERFPERM.Count > 0)
             {
@@ -1371,6 +1379,7 @@ namespace wfaDBs
                     cnx.Close();
                 }
                 con = txtPatCpu.Text;
+                int keyError = 0;
                 try
                 {
                     using (SqlCeConnection connection = new SqlCeConnection(con))
@@ -1387,6 +1396,7 @@ namespace wfaDBs
                                 SqlCeDataAdapter da = new SqlCeDataAdapter(cmd);
                                 cmd.ExecuteNonQuery();
                             }
+                            keyError++;
                         }
                         connection.Close();
                     }
@@ -1395,6 +1405,7 @@ namespace wfaDBs
                 {
                     string error = string.Empty;
                     error = ex.Message;
+                    MessageBox.Show(error,"Error " + keyError, MessageBoxButtons.OKCancel,MessageBoxIcon.Error);
                 }
                 #endregion
             }
@@ -1402,6 +1413,7 @@ namespace wfaDBs
 
         private void SincronizarUsuaPerf()
         {
+            lstUSUAPERF = new List<entUsuaPerf>();
             string con = txtPatCpu.Text;
             con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;"; //txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
             try
@@ -1483,6 +1495,7 @@ namespace wfaDBs
 
         private void SincronizarSeguPerf()
         {
+            lstSEGUPERF = new List<entSeguPerf>();
             string con = txtPatCpu.Text;
             con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;"; //txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
             try
@@ -1561,6 +1574,7 @@ namespace wfaDBs
                 {
                     string error = string.Empty;
                     error = ex.Message;
+                    MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 #endregion
             }
@@ -1568,6 +1582,7 @@ namespace wfaDBs
 
         private void SincronizarSeguUsua()
         {
+            lstSEGUUSUA = new List<entSeguUsua>();
             string con = txtPatCpu.Text;
             con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;"; //txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
             try
@@ -1603,8 +1618,11 @@ namespace wfaDBs
                     conn.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                string error = string.Empty;
+                error = ex.Message;
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if (lstSEGUUSUA.Count > 0)
             {
@@ -1646,6 +1664,7 @@ namespace wfaDBs
                 {
                     string error = string.Empty;
                     error = ex.Message;
+                    MessageBox.Show(error,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
                 #endregion
             }
@@ -1653,6 +1672,7 @@ namespace wfaDBs
 
         private void SincronizarCataMeto()
         {
+            lstCATAMETO = new List<entCataMeto>();
             string con = txtPatCpu.Text;
             con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;"; //txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
             try
@@ -1743,6 +1763,11 @@ namespace wfaDBs
             lstVnl = new List<entProcVent>();
             lstDvl = new List<entProcVent1>();
             lstDvs = new List<entProcVent1>();
+            lstVnsP = new List<entProcVentP>();
+            lstVnl4 = new List<entProcVent4>();
+            DataSet procvent4 = new DataSet();
+            DataSet procventp = new DataSet();
+
             #region conexion local
             int i = 0;
             string con = txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
@@ -1776,12 +1801,14 @@ namespace wfaDBs
                         entVnl.ven_porcieps = Convert.ToDecimal(dr["ven_porcieps"].ToString());
                         entVnl.ven_porcretencion = Convert.ToDecimal(dr["ven_porcretencion"].ToString());
                         entVnl.ven_almace = dr["ven_almace"].ToString();
+                        entVnl.ven_serie = dr["ven_serie"].ToString();
                         lstVnl.Add(entVnl);
                         #endregion
                     }
                 }
             }
             #endregion
+            /*======================================*/
             #region detalle de venta
             if (lstVnl.Count > 0)
             {
@@ -1815,15 +1842,97 @@ namespace wfaDBs
                                 entDvl.ven1_idpaquete = dr["ven1_idpaquete"].ToString();
                                 entDvl.ven1_porcdesc = Convert.ToDecimal(dr["ven1_porcdesc"].ToString());
                                 entDvl.ven1_descuento = Convert.ToDecimal(dr["ven1_descuento"].ToString());
-                                entDvl.ven1_keyalm = "";
-                                entDvl.ven1_keypro = "";
-                                entDvl.ven1_OcrCode = "";
+                                entDvl.ven1_keyalm = dr["ven1_keyalm"].ToString();
+                                entDvl.ven1_keypro = dr["ven1_keypro"].ToString();
+                                entDvl.ven1_OcrCode = dr["ven1_OcrCode"].ToString();
                                 lstDvl.Add(entDvl);
                                 #endregion
                                 lin++;
                             }
                         }
                     }
+
+
+                    using (SqlCeConnection cnx = new SqlCeConnection(con))
+                    {
+                        string SqlAction = "SELECT * FROM procventp WHERE venp_keyven = " + ent.ven_keyven;
+                        using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
+                        {
+                            SqlCeDataAdapter da = new SqlCeDataAdapter(cmd);
+                            DataTable dt = new DataTable();
+                            da.Fill(dt);
+                            int lin = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                #region
+                                entPVP = new entProcVentP();
+                                entPVP.venp_keyven = Convert.ToInt32(dr["venp_keyven"].ToString());
+                                entPVP.venp_NumLin = lin;
+                                entPVP.venp_articulo = dr["venp_articulo"].ToString();
+                                entPVP.venp_artdes = dr["venp_artdes"].ToString();
+                                entPVP.venp_cantidad = Convert.ToDecimal(dr["venp_cantidad"].ToString());
+                                entPVP.venp_precio = Convert.ToDecimal(dr["venp_precio"].ToString());
+                                entPVP.venp_iva = Convert.ToDecimal(dr["venp_iva"].ToString());
+                                entPVP.venp_ieps = Convert.ToDecimal(dr["venp_ieps"].ToString());
+                                entPVP.venp_totallinea = Convert.ToDecimal(dr["venp_totallinea"].ToString());
+                                entPVP.venp_moneda = dr["venp_moneda"].ToString();
+                                entPVP.venp_tipocambio = Convert.ToDecimal(dr["venp_tipocambio"].ToString());
+                                entPVP.venp_escompues = Convert.ToBoolean(dr["venp_escompues"].ToString());
+                                entPVP.venp_idpaquete = dr["venp_idpaquete"].ToString();
+                                entPVP.venp_porcdesc = Convert.ToDecimal(dr["venp_porcdesc"].ToString());
+                                entPVP.venp_descuento = Convert.ToDecimal(dr["venp_descuento"].ToString());
+                                entPVP.venp_keyalm = dr["venp_keyalm"].ToString();
+                                entPVP.venp_keypro = dr["venp_keypro"].ToString();
+                                entPVP.venp_OcrCode = dr["venp_OcrCode"].ToString();
+                                lstVnsP.Add(entPVP);
+                                #endregion
+                                lin++;
+                            }
+                        }
+                    }
+                    try
+                    {
+                        using (SqlCeConnection cnx = new SqlCeConnection(con))
+                        {
+                            string SqlAction = "SELECT * FROM procvent4 WHERE ven4_keyven = " + ent.ven_keyven;
+                            using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
+                            {
+                                SqlCeDataAdapter da = new SqlCeDataAdapter(cmd);
+                                DataTable dt = new DataTable();
+                                da.Fill(dt);
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                                    #region
+                                    entVnl4 = new entProcVent4();
+                                    entVnl4.ven4_keyven = Convert.ToInt32(dr["ven4_keyven"].ToString());
+                                    entVnl4.ven4_metodopago = dr["ven4_metodopago"].ToString();
+                                    entVnl4.ven4_metododet = Convert.ToInt32(dr["ven4_metododet"].ToString());
+                                    entVnl4.ven4_fecreg = Convert.ToDateTime(dr["ven4_fecreg"].ToString());
+                                    entVnl4.ven4_importe = Convert.ToDecimal(dr["ven4_importe"].ToString());
+                                    entVnl4.ven4_terminal = Convert.ToInt32(dr["ven4_terminal"].ToString());
+                                    entVnl4.ven4_keyven4 = Convert.ToInt32(dr["ven4_keyven4"].ToString());
+                                    //entVnl4.ven4_numpago = 1;
+                                    //entVnl4.ven4_keyven8 = Convert.ToInt32(dr["ven4_keyven8"].ToString());
+                                    entVnl4.ven4_metodoref = dr["ven4_metodoref"].ToString();
+                                    entVnl4.ven4_cuenta = dr["ven4_cuenta"].ToString();
+                                    entVnl4.ven4_formapago = dr["ven4_formapago"].ToString();
+                                    entVnl4.ven4_msjError = dr["ven4_msjError"].ToString();
+                                    //entVnl4.ven4_enviadobita = Convert.ToBoolean(dr["ven4_enviadobita"].ToString());
+                                    //entVnl4.ven4_enviado = Convert.ToBoolean(dr["ven4_enviado"].ToString());
+                                    //entVnl4.ven4_cancelado = Convert.ToBoolean(dr["ven4_cancelado"].ToString());
+                                    lstVnl4.Add(entVnl4);
+                                    #endregion
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        string error = string.Empty;
+                        error = ex.Message;
+                        MessageBox.Show(error,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+
                 }
 
 
@@ -1868,6 +1977,7 @@ namespace wfaDBs
                             entVns.ven_porcretencion = Convert.ToDecimal(dr["ven_porcretencion"].ToString());
                             entVns.ven_almace = dr["ven_almace"].ToString();
                             entVns.ven_keypos = Convert.ToInt32(dr["ven_keypos"].ToString());
+                            entVns.ven_serie = dr["ven_serie"].ToString();
                             lstVns.Add(entVns);
                             #endregion
                         }
@@ -1896,12 +2006,12 @@ namespace wfaDBs
                         foreach (entProcVent ent in lstVnl)
                         {
                             cmd.CommandText = "INSERT INTO procvent (ven_caja,ven_usrven,ven_cliente,ven_estado,ven_fecreg,ven_iva,ven_ieps,ven_retencion,ven_descue,ven_subtot," +
-                                               "ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion, ven_keypos) " +
+                                               "ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion, ven_keypos,ven_serie) " +
                                                "VALUES " +
                                                "('" + ent.ven_caja + "','" + ent.ven_usrven + "','" + ent.ven_cliente + "','" + ent.ven_estado + "', " +
                                                "'" + ent.ven_fecreg.ToString("yyyyMMdd") + "'," + ent.ven_iva + "," + ent.ven_ieps + "," + ent.ven_retencion + "," + ent.ven_descue + ", " +
                                                "" + ent.ven_subtot + "," + ent.ven_total + "," + ent.ven_porcdesc + "," + ent.ven_porciva + "," + ent.ven_porcieps + ", " +
-                                               "" + ent.ven_porcretencion + ", " + ent.ven_keyven + ")";
+                                               "" + ent.ven_porcretencion + ", " + ent.ven_keyven + ", " + ent.ven_serie + ")";
                             cmd.CommandType = CommandType.Text;
                             cmd.Connection = connection;
 
@@ -2021,6 +2131,7 @@ namespace wfaDBs
                                 entVns.ven_porcretencion = Convert.ToDecimal(dr["ven_porcretencion"].ToString());
                                 entVns.ven_almace = dr["ven_almace"].ToString();
                                 entVns.ven_keypos = Convert.ToInt32(dr["ven_keypos"].ToString());
+                                entVns.ven_serie = dr["ven_serie"].ToString();
                                 lstVns.Add(entVns);
                                 #endregion
                             }
@@ -2083,12 +2194,12 @@ namespace wfaDBs
                             foreach (entProcVent ent in lstVnl)
                             {
                                 cmd.CommandText = "INSERT INTO procvent (ven_caja,ven_usrven,ven_cliente,ven_estado,ven_fecreg,ven_iva,ven_ieps,ven_retencion,ven_descue,ven_subtot," +
-                                                   "ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion, ven_keypos) " +
+                                                   "ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion, ven_keypos,ven_serie) " +
                                                    "VALUES " +
                                                    "('" + ent.ven_caja + "','" + ent.ven_usrven + "','" + ent.ven_cliente + "','" + ent.ven_estado + "', " +
                                                    "'" + ent.ven_fecreg.ToString("yyyyMMdd") + "'," + ent.ven_iva + "," + ent.ven_ieps + "," + ent.ven_retencion + "," + ent.ven_descue + ", " +
                                                    "" + ent.ven_subtot + "," + ent.ven_total + "," + ent.ven_porcdesc + "," + ent.ven_porciva + "," + ent.ven_porcieps + ", " +
-                                                   "" + ent.ven_porcretencion + ", " + ent.ven_keyven + ")";
+                                                   "" + ent.ven_porcretencion + ", " + ent.ven_keyven + ", " + ent.ven_serie  + ")";
                                 cmd.CommandType = CommandType.Text;
                                 cmd.Connection = connection;
 
@@ -2168,6 +2279,71 @@ namespace wfaDBs
                         string error = string.Empty;
                         error = ex.Message;
                     }
+                    /*  detalle de paquetes procmociones */
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(con))
+                        {
+                            SqlCommand cmd = new SqlCommand();
+
+                            foreach (entProcVentP ent in lstVnsP)
+                            {
+                                cmd.CommandText = "INSERT INTO procventp(venp_keyven, venp_NumLin, venp_articulo, venp_artdes, venp_cantidad, venp_precio, venp_iva, venp_ieps, " +
+                                                  "venp_totallinea, venp_moneda, venp_tipocambio, venp_escompues, venp_idpaquete, venp_porcdesc, venp_descuento, venp_keyalm, " +
+                                                  "venp_keypro, venp_OcrCode) " +
+                                                   "VALUES " +
+                                                   "(" + ventaFinal + ", " + ent.venp_NumLin + ", '" + ent.venp_articulo + "', '" + ent.venp_artdes + "', " + ent.venp_cantidad + ", " +
+                                                   "" + ent.venp_precio + ", " + ent.venp_iva + ", " + ent.venp_ieps + ", " + ent.venp_totallinea + ", '" + ent.venp_moneda + "', " +
+                                                   "" + ent.venp_tipocambio + ", " + (ent.venp_escompues == true ? 1 : 0) + ", '" + ent.venp_idpaquete + "', " + ent.venp_porcdesc + ", " +
+                                                   "" + ent.venp_descuento + ", '" + ent.venp_keyalm + "', '" + ent.venp_keypro + "', '" + ent.venp_OcrCode + "')";
+                                cmd.CommandType = CommandType.Text;
+                                cmd.Connection = connection;
+
+                                if (connection.State == ConnectionState.Closed)
+                                    connection.Open();
+                                cmd.ExecuteNonQuery();
+                            }
+                            connection.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        string error = string.Empty;
+                        error = ex.Message;
+                        MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(con))
+                        {
+                            SqlCommand cmd = new SqlCommand();
+
+                            foreach (entProcVent4 ent in lstVnl4)
+                            {
+                                cmd.CommandText = "INSERT INTO procvent4 ([ven4_keyven],[ven4_metodopago],[ven4_metododet],[ven4_metodoref],[ven4_importe],[ven4_fecreg],[ven4_formapago],[ven4_terminal],[ven4_cuenta],[ven4_enviadobita],[ven4_enviado],[ven4_msjError],[ven4_numpago],[ven4_cancelado],[ven4_keyven8]) " +                                            
+                                                    " VALUES " +
+                                                   "(" + ventaFinal + ",'" + ent.ven4_metodopago + "', '" + ent.ven4_metododet + "', '" + ent.ven4_metodoref + "', '" + ent.ven4_importe + 
+                                                   "','" +ent.ven4_fecreg.ToString("yyyyMMdd") + "', '" + ent.ven4_formapago + "', '" + ent.ven4_terminal + "', '" + ent.ven4_cuenta + 
+                                                   "','" +ent.ven4_enviadobita + "', " + (ent.ven4_enviado == true ? 1 : 0) + ", '" + ent.ven4_msjError + "', '" + ent.ven4_numpago 
+                                                   + "','" +ent.ven4_cancelado + "', '" + ent.ven4_keyven8 + "')";
+                                cmd.CommandType = CommandType.Text;
+                                cmd.Connection = connection;
+
+                                if (connection.State == ConnectionState.Closed)
+                                    connection.Open();
+                                cmd.ExecuteNonQuery();
+                            }
+                            connection.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        string error = string.Empty;
+                        error = ex.Message;
+                        MessageBox.Show(error,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+
                     #endregion
                     #region conexion servidor
                     con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;"; //txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
@@ -2208,6 +2384,7 @@ namespace wfaDBs
                                     entVns.ven_porcretencion = Convert.ToDecimal(dr["ven_porcretencion"].ToString());
                                     entVns.ven_almace = dr["ven_almace"].ToString();
                                     entVns.ven_keypos = Convert.ToInt32(dr["ven_keypos"].ToString());
+                                    entVns.ven_serie = dr["ven_serie"].ToString();
                                     lstVns.Add(entVns);
                                     #endregion
                                 }

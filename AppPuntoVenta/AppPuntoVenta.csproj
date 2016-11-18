@@ -160,6 +160,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Seguridad\Negocio\clsLogin.cs" />
+    <Compile Include="Seguridad\Vista\frmFirmaUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Seguridad\Vista\frmFirmaUsuario.Designer.cs">
+      <DependentUpon>frmFirmaUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Seguridad\Vista\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +244,12 @@
     <Compile Include="Venta\Vista\Modal\mdlAyuda.Designer.cs">
       <DependentUpon>mdlAyuda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Venta\Vista\Modal\mdlCambiarPrecio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Venta\Vista\Modal\mdlCambiarPrecio.Designer.cs">
+      <DependentUpon>mdlCambiarPrecio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Venta\Vista\Modal\mdlDetallMetodoPago.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -293,6 +305,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Seguridad\Vista\frmFirmaUsuario.resx">
+      <DependentUpon>frmFirmaUsuario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Seguridad\Vista\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -310,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Venta\Vista\Modal\mdlAyuda.resx">
       <DependentUpon>mdlAyuda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Venta\Vista\Modal\mdlCambiarPrecio.resx">
+      <DependentUpon>mdlCambiarPrecio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Venta\Vista\Modal\mdlDetallMetodoPago.resx">
       <DependentUpon>mdlDetallMetodoPago.cs</DependentUpon>

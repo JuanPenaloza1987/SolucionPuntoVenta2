@@ -25,6 +25,8 @@ namespace AppPuntoVenta
 
         List<ArticuloVenta> listaArticulosVenta = new List<ArticuloVenta>();
 
+        Dictionary<string, decimal> preciosTemporales = new Dictionary<string, decimal>();
+
         public frmVenta()
         {
             InitializeComponent();
@@ -92,11 +94,32 @@ namespace AppPuntoVenta
             string clavearticulo = esPaquete ? respuesta.Tables[0].Rows[0][1].ToString() : respuesta.Tables[0].Rows[0][0].ToString();
             string codigoBarras = esPaquete ? respuesta.Tables[0].Rows[0][1].ToString() : respuesta.Tables[0].Rows[0][20].ToString();
             string nombreArticulo = esPaquete ? respuesta.Tables[0].Rows[0][4].ToString() : respuesta.Tables[0].Rows[0][1].ToString();
-            decimal precio = esPaquete ? decimal.Parse(respuesta.Tables[0].Rows[0][5].ToString()) : decimal.Parse(respuesta.Tables[0].Rows[0][10].ToString());
-            
+            decimal precio = precio = BuscarPrecioTemoral(clavearticulo);
+
+            if (precio == 0)
+            {
+                precio = esPaquete ? decimal.Parse(respuesta.Tables[0].Rows[0][5].ToString()) : decimal.Parse(respuesta.Tables[0].Rows[0][10].ToString());
+                if (precio == 0)
+                {
+                    txtClaveProducto.Text = "";
+                    MessageBox.Show("El artículo no tiene precio asignado." + Environment.NewLine + "Contacte a su administrador.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+
             AgregarVentaArticulo(clavearticulo, nombreArticulo, cantidad, precio, esPaquete);
             CalcularMontos();
             txtClaveProducto.Text = "";
+        }
+
+        decimal BuscarPrecioTemoral(string claveProducto)
+        {
+            var consulta = from dic in preciosTemporales where dic.Key == claveProducto select dic;
+            if (consulta.Count() > 0)
+            {
+                return consulta.First().Value;
+            }
+            return 0;
         }
 
         void AgregarVentaArticulo(string clave, string nombreArticulo, decimal cantidad, decimal precio, bool esPaquete)
@@ -179,6 +202,7 @@ namespace AppPuntoVenta
             txtClaveProducto.Focus();
             txtFaltaPAgar.Text = "";
             promocionesEnEspera = new List<Entidades.PromocionAplicada>();
+            preciosTemporales = new Dictionary<string, decimal>();
         }
 
         private void btnVender_Click(object sender, EventArgs e)
@@ -204,8 +228,8 @@ namespace AppPuntoVenta
             }
 
             decimal descuentoPaquetes = 0;
-            List<ArticuloVenta> articulosVendidosFinal = ObtenerListaArticulosAGuardar(ref descuentoPaquetes); 
-
+            List<ArticuloVenta> articulosVendidosFinal = ObtenerListaArticulosAGuardar(ref descuentoPaquetes);
+            List<ArticuloVenta> listaPaquete = listaArticulosVenta.Where(l => l.EsPaquete).Count() > 0? listaArticulosVenta.Where(l => l.EsPaquete).ToList():new List<ArticuloVenta>();
             decimal descuentoTotal = promocionesEnEspera.Where(p => p.cumplida).Sum(p => p.descuento) + descuentoPaquetes;
             total += descuentoTotal;
             //decimal porcentajeDescuentoTotal = (total * 100) / (total + descuentoTotal);
@@ -260,6 +284,7 @@ namespace AppPuntoVenta
             venta.ven_usrmod = "NULL";//Usuario que modifico (ninguno)
             venta.ven_webIde = "NULL";//No se
             venta.ven_xml = "NULL";//No se
+            venta.ven_serie = "'" + Sesion.Serie + "'";
 
             if (venta.Guardar())
             {
@@ -302,6 +327,38 @@ namespace AppPuntoVenta
                     venta.GuardarDetalle();
                 }
 
+                foreach (ArticuloVenta art in listaPaquete)
+                {
+
+                    venta.venp_artdes = string.Format("'{0}'", art.NombreArticulo);
+                    venta.venp_articulo = string.Format("'{0}'", art.ClaveArticulo);
+                    venta.venp_cantidad = string.Format("'{0}'", art.Cantidad.ToString());
+
+                    decimal descuento = 0;
+                    decimal porcentajeDescuento = 0;
+                    decimal totalProducto = art.Precio * art.Cantidad;
+                    descuento = 0;
+                    porcentajeDescuento = 0;
+                    contador++;
+                    venta.venp_numlin = (contador).ToString();
+                    venta.venp_descuento = descuento;
+                    venta.venp_porcdesc = porcentajeDescuento;
+                    venta.venp_totallinea = totalProducto;
+
+                    venta.venp_escompues = art.EsPaquete;
+                    venta.venp_idpaquete = string.Format("'{0}'", art.EsPaquete ? art.ClaveArticulo : "");
+                    venta.venp_ieps = 0;
+                    venta.venp_iva = art.Monto * (Sesion.Impuesto / 100);
+                    venta.venp_keyalm = "'" + Sesion.Almacen + "'";
+                    venta.venp_keypro = "'" + Sesion.CuentaContable + "'";
+                    venta.venp_keyven = venta.ven_keyven;
+                    venta.venp_moneda = dolaresEnPesosVenta > 0 ? dolaresEnPesosVenta >= total ? "'Dólares'" : "'Dólares/Pesos'" : "'Pesos'";
+                    venta.venp_OcrCode = "'" + Sesion.CentroCostos + "'";
+                    venta.venp_precio = art.Precio;
+                    venta.venp_tipocambio = Sesion.CambioDolar;
+                    venta.GuardarDetallePaquetes();
+                }
+
                 foreach (DetalleMetodoPago det in detallePagos)
                 {
                     venta.ven4_fecreg = "GETDATE()";
@@ -313,6 +370,7 @@ namespace AppPuntoVenta
                     venta.ven4_metodopago = det.ClaveMetodoPago;
                     venta.ven4_cuenta = "'" + Sesion.CuentaContable + "'";
                     venta.ven4_terminal = "0";
+                    venta.ven4_numpago = (1).ToString();
                     venta.GuardarDetallePagos();
                 }
 
@@ -473,6 +531,11 @@ namespace AppPuntoVenta
                             //Facturar
                         }
                         break;
+                    case Keys.F6:
+                        {
+                            MostrarCambioPrecio();
+                        }
+                        break;
 
                 }
             }
@@ -583,7 +646,16 @@ namespace AppPuntoVenta
                 CalcularMontos();
             }
         }
-        
+
+        void MostrarCambioPrecio()
+        {
+            mdlCambiarPrecio modalPrecio = new mdlCambiarPrecio();
+            DialogResult respuesta = modalPrecio.ShowDialog();
+            if (respuesta == DialogResult.OK)
+            {
+                preciosTemporales.Add(modalPrecio.ClaveProducto, modalPrecio.Precio);
+            }
+        }
         #endregion
 
         #region Promociones

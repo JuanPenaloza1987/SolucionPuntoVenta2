@@ -48,9 +48,13 @@
             this.tlblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.tlblTituloUsuario = new System.Windows.Forms.ToolStripStatusLabel();
             this.tlblUsuario = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tblCECO = new System.Windows.Forms.ToolStripStatusLabel();
             this.tlblibre = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tlblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.tmrReloj = new System.Windows.Forms.Timer(this.components);
+            this.tlblCentro = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tlblFecha = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tlblAlmacen = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuPrincipal.SuspendLayout();
             this.stsVenta.SuspendLayout();
             this.SuspendLayout();
@@ -178,6 +182,10 @@
             this.tlblVersion,
             this.tlblTituloUsuario,
             this.tlblUsuario,
+            this.tblCECO,
+            this.tlblCentro,
+            this.toolStripStatusLabel2,
+            this.tlblAlmacen,
             this.tlblibre,
             this.tlblFecha});
             this.stsVenta.Location = new System.Drawing.Point(0, 539);
@@ -207,22 +215,46 @@
             this.tlblUsuario.Name = "tlblUsuario";
             this.tlblUsuario.Size = new System.Drawing.Size(0, 17);
             // 
+            // tblCECO
+            // 
+            this.tblCECO.Name = "tblCECO";
+            this.tblCECO.Size = new System.Drawing.Size(99, 17);
+            this.tblCECO.Text = "Centro de costos:";
+            this.tblCECO.Visible = false;
+            // 
             // tlblibre
             // 
             this.tlblibre.Name = "tlblibre";
-            this.tlblibre.Size = new System.Drawing.Size(671, 17);
+            this.tlblibre.Size = new System.Drawing.Size(484, 17);
             this.tlblibre.Spring = true;
             this.tlblibre.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tmrReloj
+            // 
+            this.tmrReloj.Enabled = true;
+            this.tmrReloj.Tick += new System.EventHandler(this.tmrReloj_Tick);
+            // 
+            // tlblCentro
+            // 
+            this.tlblCentro.Name = "tlblCentro";
+            this.tlblCentro.Size = new System.Drawing.Size(0, 17);
             // 
             // tlblFecha
             // 
             this.tlblFecha.Name = "tlblFecha";
             this.tlblFecha.Size = new System.Drawing.Size(0, 17);
             // 
-            // tmrReloj
+            // toolStripStatusLabel2
             // 
-            this.tmrReloj.Enabled = true;
-            this.tmrReloj.Tick += new System.EventHandler(this.tmrReloj_Tick);
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(57, 17);
+            this.toolStripStatusLabel2.Text = "Almacen:";
+            this.toolStripStatusLabel2.Visible = false;
+            // 
+            // tlblAlmacen
+            // 
+            this.tlblAlmacen.Name = "tlblAlmacen";
+            this.tlblAlmacen.Size = new System.Drawing.Size(0, 17);
             // 
             // frmPrincipal
             // 
@@ -262,14 +294,18 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel tlblVersion;
         private System.Windows.Forms.ToolStripStatusLabel tlblTituloUsuario;
-        private System.Windows.Forms.ToolStripStatusLabel tlblUsuario;
         private System.Windows.Forms.ToolStripStatusLabel tlblibre;
-        private System.Windows.Forms.ToolStripStatusLabel tlblFecha;
         private System.Windows.Forms.Timer tmrReloj;
         private System.Windows.Forms.ToolStripMenuItem métodosDePagoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configuraciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paqueteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem promocionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configruaciónToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel tlblUsuario;
+        private System.Windows.Forms.ToolStripStatusLabel tblCECO;
+        private System.Windows.Forms.ToolStripStatusLabel tlblCentro;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel tlblAlmacen;
+        private System.Windows.Forms.ToolStripStatusLabel tlblFecha;
     }
 }

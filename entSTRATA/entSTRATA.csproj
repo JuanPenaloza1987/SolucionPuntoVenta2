@@ -45,6 +45,7 @@
     <Compile Include="entPerfPerm.cs" />
     <Compile Include="entProcVent.cs" />
     <Compile Include="entProcVent1.cs" />
+    <Compile Include="entProcVent4.cs" />
     <Compile Include="entProcVentP.cs" />
     <Compile Include="entSeguPerf.cs" />
     <Compile Include="entSeguUsua.cs" />
