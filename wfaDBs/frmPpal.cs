@@ -18,8 +18,7 @@ using STRATA.Entities;
 using System.Data.SqlClient;
 using AppPuntoVenta;
 using STRATA.wfaDBs;
-
-
+using System.Threading;
 
 namespace wfaDBs
 {
@@ -62,15 +61,21 @@ namespace wfaDBs
         public TimeSpan horaenvio;
         public DateTime horaconfg;
 
-        public frmPpal()
-        {
-            InitializeComponent();
+        frmPrincipal frmPP = new frmPrincipal();
 
+        public frmPpal()
+        {           
+            InitializeComponent();
+            backgroundWorker1.RunWorkerAsync();
         }
 
+        public void iniciarSplash() {
+            Application.Run(new frmSplash());
+        }
         private void frmPpal_Load(object sender, EventArgs e)
         {
             //
+            int entroP = 0;
             #region variables del ping
             Ping pngfpr = new Ping();
             byte[] buffer = new byte[32];
@@ -191,7 +196,9 @@ namespace wfaDBs
 
             if (sincronizarPOS == 2 && sincronizarSRV == 2)
             {
-                pngrpl = pngfpr.Send(txtIpaCnx.Text, 1000, buffer, pngopc);
+                entroP = 1;
+
+                /*pngrpl = pngfpr.Send(txtIpaCnx.Text, 1000, buffer, pngopc);
                 if (pngrpl.Status == IPStatus.Success && pngrpl.RoundtripTime < 3000)
                 {
                     SincronizarConfiguracion();
@@ -204,7 +211,6 @@ namespace wfaDBs
                     SincronizarCataMeto1();
                     SincronizarCataAlma();
                     SincronizarProcVentP();
-                    /*====================*/
                     SincronizarProcPromo();
                     SincronizarPromArti();
                     SincronizarProcPQtes();
@@ -215,24 +221,38 @@ namespace wfaDBs
                 else
                 {
                     envio = false;
+                }*/
+            }
+
+            if (entroP == 0)
+            {
+                verificarDatosIniciales verDatIni = new verificarDatosIniciales();
+                if (Convert.ToInt32(verDatIni.existenDatos()) == 1)
+                {
+                    sincronizacionP();
                 }
             }
-
-            verificarDatosIniciales verDatIni = new verificarDatosIniciales();
-            if (Convert.ToInt32(verDatIni.existenDatos()) == 1)
+            else
             {
-                sincronizarPrimeraVez();
-                btnEnviar.PerformClick();
-
-                frmPrincipal frmPP = new frmPrincipal();
-                frmPP.Show();
+                sincronizacionP();
             }
+        }
 
+        private void sincronizacionP() {
+            sincronizarPrimeraVez();
+            btnEnviar.PerformClick();
+
+            frmPP.Show();
+            frmPP.FormClosed += new FormClosedEventHandler(cerrarStrata);
+        }
+
+        private void cerrarStrata(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            //
             this.Close();
         }
 
@@ -779,36 +799,33 @@ namespace wfaDBs
                     }
                 }
 
-                if (dt != null && dt.Tables[0].Rows.Count > 0)
-                {
-                    con = txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
+                con = txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
 
-                    using (SqlCeConnection cnx = new SqlCeConnection(con))
+                using (SqlCeConnection cnx = new SqlCeConnection(con))
+                {
+                    cnx.Open();
+                    string SqlAction = "DELETE FROM cataalma";
+                    using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
                     {
-                        cnx.Open();
-                        string SqlAction = "DELETE FROM cataalma";
+                        int res = cmd.ExecuteNonQuery();
+                    }
+
+                    foreach (DataRow dr in dt.Tables[0].Rows)
+                    {
+                        SqlAction = "INSERT INTO [cataalma] ([alm_keyalm],[alm_nombre],[alm_activo],[alm_estado],[alm_PrcCode]) "+
+                                    " VALUES (" +
+                                    "'" + dr["alm_keyalm"].ToString() + "'" +
+                                    ",'" + dr["alm_nombre"].ToString() + "'" +
+                                    ",'" + dr["alm_activo"].ToString() + "'" +
+                                    ",'" + dr["alm_estado"].ToString() + "'" +
+                                    ",'" + dr["alm_PrcCode"].ToString() + "')";
                         using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
                         {
-                            int res = cmd.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
                         }
-
-                        foreach (DataRow dr in dt.Tables[0].Rows)
-                        {
-                            SqlAction = "INSERT INTO [cataalma] ([alm_keyalm],[alm_nombre],[alm_activo],[alm_estado],[alm_PrcCode]) "+
-                                        " VALUES (" +
-                                        "'" + dr["alm_keyalm"].ToString() + "'" +
-                                        ",'" + dr["alm_nombre"].ToString() + "'" +
-                                        ",'" + dr["alm_activo"].ToString() + "'" +
-                                        ",'" + dr["alm_estado"].ToString() + "'" +
-                                        ",'" + dr["alm_PrcCode"].ToString() + "')";
-                            using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
-                            {
-                                cmd.ExecuteNonQuery();
-                            }
-                        }
-                        //DataRow dr = dt.Tables[0].Rows[0];
-
                     }
+                    //DataRow dr = dt.Tables[0].Rows[0];
+
                 }
 
             }
@@ -2521,9 +2538,17 @@ namespace wfaDBs
 
         private void frmPpal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            frmPrincipal frmPP = new frmPrincipal();
-            frmPP.Show();
-            
+            frmPP.Close();            
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            iniciarSplash();
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //backgroundWorker1.CancelAsync();
         }
     }
 }

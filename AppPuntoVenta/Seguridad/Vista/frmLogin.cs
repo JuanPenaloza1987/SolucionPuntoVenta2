@@ -67,7 +67,8 @@ namespace AppPuntoVenta.Seguridad.Vista
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Close();
+            Application.Exit();
+            //Close();
         }
 
         public class valAlmacenes {

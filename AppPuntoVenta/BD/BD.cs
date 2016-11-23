@@ -18,7 +18,7 @@ public class BD
     
     public string CadenaConexion
     {
-        get { return string.Format(AppPuntoVenta.Properties.Settings.Default.ConexionLocal, Application.UserAppDataPath); }
+        get { return string.Format(AppPuntoVenta.Properties.Settings.Default.ConexionPrueba, Application.UserAppDataPath); }
     }
 
     public string identity

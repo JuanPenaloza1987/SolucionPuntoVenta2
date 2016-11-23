@@ -30,6 +30,7 @@ namespace AppPuntoVenta
         public frmVenta()
         {
             InitializeComponent();
+
             codigoCorte = Sesion.CodigoCorte;
             CargarConfiguracionMetodosPago();
             lblTipoCambio.Text = Sesion.CambioDolar.ToString("0.00"); //Cargar tipo de cambio
@@ -934,6 +935,50 @@ namespace AppPuntoVenta
                 BuscarProducto();
         }
         #endregion
+
+        private void btnBusquedaArt_Click(object sender, EventArgs e)
+        {
+            MostrarBusquedaProducto();                                                              
+        }
+
+        private void btnFormasPago_Click(object sender, EventArgs e)
+        {
+            MostrarFormaDePago();
+        }
+
+        private void btnTipoCambio_Click(object sender, EventArgs e)
+        {
+            MostrarDolares();
+        }
+
+        private void btnCambioPrecio_Click(object sender, EventArgs e)
+        {
+            MostrarCambioPrecio();
+        }
+
+        private void btnBusquedaArt_MouseHover(object sender, EventArgs e)
+        {
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.btnBusquedaArt, "Búsqueda de Artículos al dar click o presione F2");
+        }
+
+        private void btnFormasPago_MouseHover(object sender, EventArgs e)
+        {
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.btnFormasPago, "Formas de Pago al dar click o presione F3");
+        }
+
+        private void btnTipoCambio_MouseHover(object sender, EventArgs e)
+        {
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.btnTipoCambio, "Tipo de Cambio al dar click o presione F4");
+        }
+
+        private void btnCambioPrecio_MouseHover(object sender, EventArgs e)
+        {
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.btnCambioPrecio, "Cambiar Precio de Artículos al dar click o presione F6");
+        }
     }
 }
 

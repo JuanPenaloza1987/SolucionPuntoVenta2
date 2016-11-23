@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.dgvProductos = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtDatoProducto = new System.Windows.Forms.TextBox();
             this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NombreProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtDatoProducto = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,8 +50,24 @@
             this.dgvProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProductos.Size = new System.Drawing.Size(560, 239);
             this.dgvProductos.TabIndex = 0;
+            this.dgvProductos.DoubleClick += new System.EventHandler(this.dgvProductos_DoubleClick);
             this.dgvProductos.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvProductos_KeyDown);
             this.dgvProductos.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvProductos_KeyUp);
+            // 
+            // Codigo
+            // 
+            this.Codigo.DataPropertyName = "ClaveArticulo";
+            this.Codigo.FillWeight = 50F;
+            this.Codigo.HeaderText = "Código";
+            this.Codigo.Name = "Codigo";
+            this.Codigo.ReadOnly = true;
+            // 
+            // NombreProducto
+            // 
+            this.NombreProducto.DataPropertyName = "NombreArticulo";
+            this.NombreProducto.HeaderText = "Nombre de producto";
+            this.NombreProducto.Name = "NombreProducto";
+            this.NombreProducto.ReadOnly = true;
             // 
             // label1
             // 
@@ -71,21 +87,6 @@
             this.txtDatoProducto.Size = new System.Drawing.Size(149, 26);
             this.txtDatoProducto.TabIndex = 2;
             this.txtDatoProducto.TextChanged += new System.EventHandler(this.txtDatoProducto_TextChanged);
-            // 
-            // Codigo
-            // 
-            this.Codigo.DataPropertyName = "ClaveArticulo";
-            this.Codigo.FillWeight = 50F;
-            this.Codigo.HeaderText = "Código";
-            this.Codigo.Name = "Codigo";
-            this.Codigo.ReadOnly = true;
-            // 
-            // NombreProducto
-            // 
-            this.NombreProducto.DataPropertyName = "NombreArticulo";
-            this.NombreProducto.HeaderText = "Nombre de producto";
-            this.NombreProducto.Name = "NombreProducto";
-            this.NombreProducto.ReadOnly = true;
             // 
             // mdlBusquedaProducto
             // 

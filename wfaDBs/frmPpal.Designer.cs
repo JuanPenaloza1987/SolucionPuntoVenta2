@@ -71,6 +71,7 @@
             this.btnEnviar = new System.Windows.Forms.Button();
             this.ntiApp = new System.Windows.Forms.NotifyIcon(this.components);
             this.tmrEnviar = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tcnCnfg.SuspendLayout();
             this.tpgCnxLcl.SuspendLayout();
             this.tpgCnxSrv.SuspendLayout();
@@ -485,6 +486,11 @@
             this.tmrEnviar.Interval = 10000;
             this.tmrEnviar.Tick += new System.EventHandler(this.tmrEnviar_Tick);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
             // frmPpal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -551,6 +557,7 @@
         private System.Windows.Forms.Button btnEnviar;
         private System.Windows.Forms.NotifyIcon ntiApp;
         private System.Windows.Forms.Timer tmrEnviar;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
