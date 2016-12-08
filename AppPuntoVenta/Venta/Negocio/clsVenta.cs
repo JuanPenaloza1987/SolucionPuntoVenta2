@@ -5,8 +5,7 @@ using System.Text;
 using System.Data;
 using SRATAPV.Utilerias;
 
-
-namespace SRATAPV.Ventas.Negocio
+namespace AppPuntoVenta.Ventas.Negocio
 {
     class clsVenta
     {
@@ -66,6 +65,7 @@ namespace SRATAPV.Ventas.Negocio
 
         private string _sucursal;
 
+        private string _ven_rfccas;
         #endregion
 
         #region//Detalle
@@ -424,6 +424,11 @@ namespace SRATAPV.Ventas.Negocio
             set { _ven_serie = value; }
         }
 
+        public string ven_rfccas
+        {
+            get { return _ven_rfccas; }
+            set { _ven_rfccas = value; }
+        }
         #endregion
 
         #region //Detalle
@@ -517,6 +522,7 @@ namespace SRATAPV.Ventas.Negocio
             get { return _ven1_OcrCode; }
             set { _ven1_OcrCode = value; }
         }
+        
         #endregion
 
         #region //Detalle
@@ -805,7 +811,51 @@ namespace SRATAPV.Ventas.Negocio
             set { _ven7_termCode = value; }
         }
 
-        #endregion 
+        #endregion
+
+        #region Lotes
+        private int _venl_keyven;
+        private string _venl_articulo;
+        private string _venl_artdes;
+        private float _venl_cantidad;
+        private string _venl_lote;
+        private int _venl_numlin;
+        public int venl_numlin
+        {
+            get { return _venl_numlin; }
+            set { _venl_numlin = value; }
+        }
+
+        public string venl_lote
+        {
+            get { return _venl_lote; }
+            set { _venl_lote = value; }
+        }
+
+        public float venl_cantidad
+        {
+            get { return _venl_cantidad; }
+            set { _venl_cantidad = value; }
+        }
+
+        public string venl_artdes
+        {
+            get { return _venl_artdes; }
+            set { _venl_artdes = value; }
+        }
+
+        public string venl_articulo
+        {
+            get { return _venl_articulo; }
+            set { _venl_articulo = value; }
+        }
+
+        public int venl_keyven
+        {
+            get { return _venl_keyven; }
+            set { _venl_keyven = value; }
+        }
+        #endregion
 
         public DataSet leerClaveVenta()
         {
@@ -923,7 +973,7 @@ namespace SRATAPV.Ventas.Negocio
         {
             BD Objeto = new BD();
 
-            Objeto.sentenciaSQL = "INSERT INTO procvent(ven_caja,ven_usrven,ven_cliente,ven_estado,ven_fecdoc,ven_fecreg,ven_iva,ven_ieps,ven_retencion,ven_descue,ven_subtot,ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion,ven_almace,ven_coment,ven_webIde,ven_docsap,ven_enviad,ven_keycot,ven_formapago,ven_metodopago,ven_metododet,ven_metodoref,ven_keycor,ven_enviadobita,ven_keyser,ven_nomser,ven_keyase,ven_referencia,ven_groupnum,ven_serie)" +
+            Objeto.sentenciaSQL = "INSERT INTO procvent(ven_caja,ven_usrven,ven_cliente,ven_estado,ven_fecdoc,ven_fecreg,ven_iva,ven_ieps,ven_retencion,ven_descue,ven_subtot,ven_total,ven_porcdesc,ven_porciva,ven_porcieps,ven_porcretencion,ven_almace,ven_coment,ven_webIde,ven_docsap,ven_enviad,ven_keycot,ven_formapago,ven_metodopago,ven_metododet,ven_metodoref,ven_keycor,ven_enviadobita,ven_keyser,ven_nomser,ven_keyase,ven_referencia,ven_groupnum,ven_serie,ven_rfccas)" +
                 " VALUES(" + ven_caja +
                 "," + ven_usrven +
                 "," + ven_cliente +
@@ -956,7 +1006,8 @@ namespace SRATAPV.Ventas.Negocio
                 "," + ven_keyase +
                 "," + ven_referencia +
                 "," + ven_groupnum + 
-                "," + ven_serie + ")";
+                "," + ven_serie + 
+                "," + ven_rfccas + ")";
 
 
             Objeto.ejecutaConsulta();
@@ -1035,6 +1086,31 @@ namespace SRATAPV.Ventas.Negocio
                   ", " + ven1_keyalm +
                   ", " + ven1_keypro +
                   ", " + ven1_OcrCode + ")";
+
+            Objeto.ejecutaTransaccion();
+            if (!Objeto.hayError)
+            {
+                return true;
+            }
+            else
+            {
+                mensaje = Objeto.mensaje;
+                return false;
+            }
+        }
+
+        public Boolean GuardarDetalleLote()
+        {
+            BD Objeto = new BD();
+
+            Objeto.sentenciaSQL = "INSERT INTO procventlote(venl_keyven,venl_articulo,venl_artdes,venl_cantidad,venl_lote,venl_numlin) VALUES" +
+                "(" +
+                  venl_keyven +
+                  ", " + venl_articulo +
+                  ", " + venl_artdes +
+                  ", " + venl_cantidad +
+                  ", " + venl_lote +
+                  ", " + venl_numlin + ")";
 
             Objeto.ejecutaTransaccion();
             if (!Objeto.hayError)

@@ -19,6 +19,7 @@ using System.Data.SqlClient;
 using AppPuntoVenta;
 using STRATA.wfaDBs;
 using System.Threading;
+using SRATAPV;
 
 namespace wfaDBs
 {
@@ -40,6 +41,7 @@ namespace wfaDBs
         public List<entCataAlma> lstCATAALMA = new List<entCataAlma>();
         public List<entCataMeto1> lstCATAMETO1 = new List<entCataMeto1>();
         public List<entProcVentP> lstPROCVENTP = new List<entProcVentP>();
+        public List<entCataTerm> lstCATATERM = new List<entCataTerm>();
 
         public entProcVent entVnl;
         public entProcVent entVns;
@@ -55,6 +57,7 @@ namespace wfaDBs
         public entCataMeto1 entCMET1;
         public entProcVentP entPVP;
         public entProcVent4 entVnl4;
+        public entCataTerm entctaTerm;
 
         public bool envio = false;
 
@@ -62,6 +65,7 @@ namespace wfaDBs
         public DateTime horaconfg;
 
         frmPrincipal frmPP = new frmPrincipal();
+        
 
         public frmPpal()
         {           
@@ -275,13 +279,12 @@ namespace wfaDBs
                 SincronizarCataMeto1();
                 SincronizarCataAlma();
                 SincronizarProcVentP();
-                /*====================*/
                 SincronizarProcPromo();
                 SincronizarPromArti();
                 SincronizarProcPQtes();
                 SincronizarPQteArti();
                 SincronizarDiaProm();
-
+                SincronizarCataTerm();
                 envio = true;
             }
             else
@@ -384,11 +387,7 @@ namespace wfaDBs
             btnEnviar.PerformClick();
 
             frmPrincipal frmPP = new frmPrincipal();
-            frmPP.Show();
-           
-            //this.Close();
-            //frmPrincipal frmPP = new frmPrincipal();
-            //frmPP.Show();
+            frmPP.Show();           
         }
 
         private void trabajoBack() {
@@ -835,6 +834,66 @@ namespace wfaDBs
             }
         }
         /*==========================================*/
+
+        private void SincronizarCataTerm()
+        {
+            string con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;";
+            //string con = @"Server=.;Database=STRATA_PV;uid=sa;pwd=Createga2016;";
+
+            try
+            {
+                DataSet dt = new DataSet();
+                using (SqlConnection conn = new SqlConnection())
+                {
+                    //conn.ConnectionString = "Server=172.16.0.8;Database=SBO_QFSCPRUEBAS;uid=sa;pwd=sap@dmin625;";
+                    conn.ConnectionString = con;
+                    conn.Open();
+
+                    string command = "SELECT * FROM cataterm WHERE ter_valido = 1";
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command, conn))
+                    {
+                        sda.Fill(dt);
+                    }
+                }
+
+                con = txtPatCpu.Text;// +"providerName='Microsoft.SqlServerCe.Client.4.0'";
+
+                using (SqlCeConnection cnx = new SqlCeConnection(con))
+                {
+                    cnx.Open();
+                    string SqlAction = "DELETE FROM cataterm";
+                    using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
+                    {
+                        int res = cmd.ExecuteNonQuery();
+                    }
+
+                    foreach (DataRow dr in dt.Tables[0].Rows)
+                    {
+                        SqlAction = "INSERT INTO [cataterm] ([ter_CreditCard],[ter_CardName],[ter_acctcode],[ter_valido]) " +
+                                    " VALUES (" +
+                                    "'" + dr["ter_CreditCard"].ToString() + "'" +
+                                    ",'" + dr["ter_CardName"].ToString() + "'" +
+                                    ",'" + dr["ter_acctcode"].ToString() + "'" +
+                                    ",'" + dr["ter_valido"].ToString() + "')";
+                        using (SqlCeCommand cmd = new SqlCeCommand(SqlAction, cnx))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    //DataRow dr = dt.Tables[0].Rows[0];
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+
         private void SincronizarProcPromo()
         {
             string con = "Server=" + txtIpaCnx.Text + ";Database=" + txtDbsCnx.Text + ";uid=sa;pwd=sap@dmin625;";
@@ -2501,19 +2560,20 @@ namespace wfaDBs
                         //horaEnvio = DateTime.Now.AddHours(4).ToShortTimeString();
                         horaconfg = horaconfg.AddHours(4);
                         horaenvio = new TimeSpan(horaconfg.Hour, horaconfg.Minute, horaconfg.Second);
-                        SincronizarConfiguracion();
+                        /*SincronizarConfiguracion();
                         SincronizarArticulos();
                         SincronizarPerfPerm();
                         SincronizarSeguUsua();
                         SincronizarUsuaPerf();
                         SincronizarCataMeto();
                         SincronizarSeguPerf();
-                        /*====================*/
                         SincronizarProcPromo();
                         SincronizarPromArti();
                         SincronizarProcPQtes();
                         SincronizarPQteArti();
-                        SincronizarDiaProm();
+                        SincronizarDiaProm();*/
+
+                        sincronizacionP();
                     }
                     else if (hrs.Hours == horaenvio.Hours && hrs.Minutes > horaenvio.Minutes)
                     {

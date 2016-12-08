@@ -43,13 +43,13 @@
             this.Prefijo,
             this.Letra,
             this.MetodoPago});
-            this.dgvFormaPago.Enabled = false;
             this.dgvFormaPago.Location = new System.Drawing.Point(12, 12);
             this.dgvFormaPago.Name = "dgvFormaPago";
             this.dgvFormaPago.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvFormaPago.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFormaPago.Size = new System.Drawing.Size(260, 237);
             this.dgvFormaPago.TabIndex = 0;
+            this.dgvFormaPago.DoubleClick += new System.EventHandler(this.dgvFormaPago_DoubleClick);
             // 
             // Prefijo
             // 

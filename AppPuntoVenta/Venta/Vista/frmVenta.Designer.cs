@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVenta));
             this.lblClave = new System.Windows.Forms.Label();
             this.txtClaveProducto = new System.Windows.Forms.TextBox();
@@ -105,14 +105,14 @@
             this.Column1,
             this.CodigoBarras,
             this.ClaveArticulo});
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvProductos.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvProductos.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvProductos.Enabled = false;
             this.dgvProductos.Location = new System.Drawing.Point(91, 48);
             this.dgvProductos.Name = "dgvProductos";
@@ -131,9 +131,9 @@
             // Precio
             // 
             this.Precio.DataPropertyName = "Precio";
-            dataGridViewCellStyle22.Format = "N2";
-            dataGridViewCellStyle22.NullValue = null;
-            this.Precio.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Precio.DefaultCellStyle = dataGridViewCellStyle4;
             this.Precio.HeaderText = "Precio";
             this.Precio.MinimumWidth = 8;
             this.Precio.Name = "Precio";
@@ -150,9 +150,9 @@
             // Monto
             // 
             this.Monto.DataPropertyName = "monto";
-            dataGridViewCellStyle23.Format = "N2";
-            dataGridViewCellStyle23.NullValue = null;
-            this.Monto.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Monto.DefaultCellStyle = dataGridViewCellStyle5;
             this.Monto.HeaderText = "Monto";
             this.Monto.MinimumWidth = 8;
             this.Monto.Name = "Monto";
@@ -187,14 +187,14 @@
             this.grbImagen.Controls.Add(this.imgProducto);
             this.grbImagen.Location = new System.Drawing.Point(541, 12);
             this.grbImagen.Name = "grbImagen";
-            this.grbImagen.Size = new System.Drawing.Size(231, 198);
+            this.grbImagen.Size = new System.Drawing.Size(231, 206);
             this.grbImagen.TabIndex = 8;
             this.grbImagen.TabStop = false;
             // 
             // imgProducto
             // 
             this.imgProducto.Image = ((System.Drawing.Image)(resources.GetObject("imgProducto.Image")));
-            this.imgProducto.Location = new System.Drawing.Point(50, 19);
+            this.imgProducto.Location = new System.Drawing.Point(38, 27);
             this.imgProducto.Name = "imgProducto";
             this.imgProducto.Size = new System.Drawing.Size(160, 160);
             this.imgProducto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -387,7 +387,7 @@
             // 
             this.btnCambioPrecio.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCambioPrecio.BackgroundImage")));
             this.btnCambioPrecio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnCambioPrecio.Location = new System.Drawing.Point(12, 287);
+            this.btnCambioPrecio.Location = new System.Drawing.Point(12, 275);
             this.btnCambioPrecio.Name = "btnCambioPrecio";
             this.btnCambioPrecio.Size = new System.Drawing.Size(73, 66);
             this.btnCambioPrecio.TabIndex = 19;
@@ -400,7 +400,7 @@
             // 
             this.btnTipoCambio.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnTipoCambio.BackgroundImage")));
             this.btnTipoCambio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTipoCambio.Location = new System.Drawing.Point(12, 205);
+            this.btnTipoCambio.Location = new System.Drawing.Point(12, 196);
             this.btnTipoCambio.Name = "btnTipoCambio";
             this.btnTipoCambio.Size = new System.Drawing.Size(73, 73);
             this.btnTipoCambio.TabIndex = 18;
@@ -414,7 +414,7 @@
             this.btnFormasPago.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnFormasPago.BackgroundImage")));
             this.btnFormasPago.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnFormasPago.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFormasPago.Location = new System.Drawing.Point(12, 122);
+            this.btnFormasPago.Location = new System.Drawing.Point(12, 121);
             this.btnFormasPago.Name = "btnFormasPago";
             this.btnFormasPago.Size = new System.Drawing.Size(73, 69);
             this.btnFormasPago.TabIndex = 17;
@@ -428,7 +428,7 @@
             this.btnBusquedaArt.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBusquedaArt.BackgroundImage")));
             this.btnBusquedaArt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnBusquedaArt.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnBusquedaArt.Location = new System.Drawing.Point(12, 40);
+            this.btnBusquedaArt.Location = new System.Drawing.Point(12, 48);
             this.btnBusquedaArt.Name = "btnBusquedaArt";
             this.btnBusquedaArt.Size = new System.Drawing.Size(73, 67);
             this.btnBusquedaArt.TabIndex = 12;

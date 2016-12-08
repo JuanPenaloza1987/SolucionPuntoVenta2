@@ -74,5 +74,14 @@ namespace AppPuntoVenta
             set { _hayPromocion = value; }
         }
 
+        private string _lote;
+
+        public string lote
+        {
+            get { return _lote; }
+            set { _lote = value; }
+        }
+
+
     }
 }

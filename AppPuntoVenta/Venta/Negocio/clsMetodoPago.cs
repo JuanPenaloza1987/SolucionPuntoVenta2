@@ -97,6 +97,24 @@ namespace AppPuntoVenta.Venta.Negocio
             }
         }
 
+        public DataSet leerTipoMetodoPago()
+        {
+            BD Objeto = new BD();
+            DataSet tipos = new DataSet();
+
+            Objeto.sentenciaSQL = "SELECT *,UPPER(ter_CardName) AS ter_CardName1,UPPER(ter_acctcode) AS ter_acctcode1 FROM cataterm WHERE ter_valido = 1";
+            tipos = Objeto.ejecutaConsulta();
+            if (!Objeto.hayError)
+            {
+                return tipos;
+            }
+            else
+            {
+                mensaje = Objeto.mensaje;
+                return null;
+            }
+        }
+
 
         public DataSet MetodosConfigurados()
         {

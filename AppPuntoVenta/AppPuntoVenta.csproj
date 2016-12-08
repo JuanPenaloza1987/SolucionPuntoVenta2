@@ -112,6 +112,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BD\BD.cs" />
+    <Compile Include="Catalogos\Negocio\clsClientes.cs" />
+    <Compile Include="Catalogos\Vista\frmClienteCasual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vista\frmClienteCasual.Designer.cs">
+      <DependentUpon>frmClienteCasual.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuraciones\Negocio\clsConfiguracion.cs" />
     <Compile Include="Configuraciones\Vista\frmConfiguracion.cs">
       <SubType>Form</SubType>
@@ -177,6 +184,7 @@
     <Compile Include="Utilerias\Negocio\clsPermisos.cs" />
     <Compile Include="Venta\Datos\dsCorte.cs">
       <DependentUpon>dsCorte.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Venta\Datos\dsCorte.Designer.cs">
       <DependentUpon>dsCorte.cs</DependentUpon>
@@ -268,6 +276,9 @@
     <Compile Include="Venta\Vista\Modal\mdlFormaPago.Designer.cs">
       <DependentUpon>mdlFormaPago.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Catalogos\Vista\frmClienteCasual.resx">
+      <DependentUpon>frmClienteCasual.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuraciones\Vista\frmConfiguracion.resx">
       <DependentUpon>frmConfiguracion.cs</DependentUpon>
     </EmbeddedResource>

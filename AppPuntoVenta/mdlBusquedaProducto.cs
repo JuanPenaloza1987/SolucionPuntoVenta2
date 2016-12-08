@@ -174,13 +174,11 @@ namespace AppPuntoVenta
 
         private void dgvProductos_DoubleClick(object sender, EventArgs e)
         {
-
             _codigoArticulo = dgvProductos.SelectedRows[0].Cells[0].Value.ToString();
             _nombreArticulo = dgvProductos.SelectedRows[0].Cells[1].Value.ToString();
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-
         }
     }
 }

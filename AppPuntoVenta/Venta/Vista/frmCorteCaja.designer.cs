@@ -56,6 +56,7 @@
             this.label29 = new System.Windows.Forms.Label();
             this.cmbUsuarios = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lstMetodos = new System.Windows.Forms.ListBox();
             this.lblTarjetaDebito = new System.Windows.Forms.Label();
             this.lblTransferencia = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -182,7 +183,6 @@
             this.btnImprimir.TabIndex = 17;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = true;
-            this.btnImprimir.Visible = false;
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // groupBox3
@@ -407,6 +407,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lstMetodos);
             this.groupBox2.Controls.Add(this.lblTarjetaDebito);
             this.groupBox2.Controls.Add(this.lblTransferencia);
             this.groupBox2.Controls.Add(this.label31);
@@ -433,6 +434,19 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ventas";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // lstMetodos
+            // 
+            this.lstMetodos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(252)))), ((int)(((byte)(252)))));
+            this.lstMetodos.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstMetodos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.lstMetodos.FormattingEnabled = true;
+            this.lstMetodos.HorizontalScrollbar = true;
+            this.lstMetodos.Location = new System.Drawing.Point(7, 28);
+            this.lstMetodos.Name = "lstMetodos";
+            this.lstMetodos.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.lstMetodos.Size = new System.Drawing.Size(207, 104);
+            this.lstMetodos.TabIndex = 1;
             // 
             // lblTarjetaDebito
             // 
@@ -821,7 +835,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(252)))), ((int)(((byte)(252)))));
-            this.ClientSize = new System.Drawing.Size(917, 417);
+            this.ClientSize = new System.Drawing.Size(911, 411);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCorteCaja";
@@ -906,5 +920,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListBox lstMetodos;
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="entCataAlma.cs" />
     <Compile Include="entCataMeto.cs" />
     <Compile Include="entCataMeto1.cs" />
+    <Compile Include="entCataTerm.cs" />
     <Compile Include="entPerfPerm.cs" />
     <Compile Include="entProcVent.cs" />
     <Compile Include="entProcVent1.cs" />

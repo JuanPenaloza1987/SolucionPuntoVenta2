@@ -9,14 +9,20 @@ namespace AppPuntoVenta.Venta.Vista.Modal
         public mdlDetallMetodoPago()
         {
             InitializeComponent();
+            CargarTipoMetodoPago();
         }
 
         public string Referencia { get; set; }
         public string IdDetalle { get; set; }
         public string NombreDetalle { get; set; }
         public decimal Monto { get; set; }
+        public int Digitos { get; set; }
+        public string Tipo { get; set; }
+
         TipoDetalle tipoDetalle = TipoDetalle.NoAplica;
+
         public string totS;
+
         public decimal tot;
 
         public string ClaveMetodoPago { get { return lblMetodoPago.Text; } set { lblMetodoPago.Text = value; } }
@@ -42,17 +48,33 @@ namespace AppPuntoVenta.Venta.Vista.Modal
                     Referencia = "";
                 }
 
-                
-                decimal totText = decimal.Parse(txtMonto.Text);
+                if (string.IsNullOrEmpty(txtMonto.Text))
+                {
+                    MessageBox.Show("Ingrese una cantidad.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                if (tot < totText)
+                decimal totText = decimal.Parse(txtMonto.Text);
+                int digitos = 0;
+                if (!int.TryParse(txt4Digitos.Text, out digitos))
+                {
+                    MessageBox.Show("Debe de ingresar los ultimos 4 dígitos de la tarjeta.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }else if (cmbTipoFP.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Debe seleccionar un tipo.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                } else if (tot < totText)
                 {
                     MessageBox.Show("EL monto debe ser menor o igual.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
-                } 
+                }
+
                 this.DialogResult = DialogResult.OK;
                 decimal monto = 0;
                 decimal.TryParse(txtMonto.Text, out monto);
+                Digitos = digitos;
+                Tipo = cmbTipoFP.SelectedValue.ToString();
                 Monto = monto;
                 this.Close();
             }
@@ -89,6 +111,21 @@ namespace AppPuntoVenta.Venta.Vista.Modal
                     Referencia = "0";
                 }
             }
+        }
+
+        public void CargarTipoMetodoPago()
+        {
+            clsMetodoPago metodo = new clsMetodoPago();
+            DataSet detallesTipo = metodo.leerTipoMetodoPago();
+            if (detallesTipo != null && detallesTipo.Tables[0].Rows.Count > 0)
+            {
+                DataTable tabla = detallesTipo.Tables[0];
+                cmbTipoFP.DataSource = tabla;
+                cmbTipoFP.DisplayMember = "ter_CardName1";
+                cmbTipoFP.ValueMember = "ter_acctcode1";
+
+            }
+            cmbTipoFP.SelectedValue = -1;
         }
 
         enum TipoDetalle

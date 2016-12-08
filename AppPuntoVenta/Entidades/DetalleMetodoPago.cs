@@ -12,5 +12,7 @@ namespace AppPuntoVenta.Entidades
         public string Referencia { get; set; }
         public decimal Monto { get; set; }
         public string NombreDetalle { get; set; }
+        public int digitos { get; set; }
+        public string tipo { get; set; }
     }
 }

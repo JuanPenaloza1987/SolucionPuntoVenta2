@@ -274,33 +274,39 @@ namespace SRATAPV.Ventas.Vista
                     {
                         MessageBox.Show(corteAbierto.mensaje, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    List<string> metodos = new List<string>();
                     foreach (DataRow item in ventasDetalle.Rows)
                     {
                         item[0].ToString();
                         venTot += Convert.ToDecimal(item[1].ToString());
-                        switch (item[0].ToString())
-                        {
-                            case"Efectivo":                                
-                                venTotEfectivo = Convert.ToDecimal(item[1].ToString());
-                                break;
-                            case "Tarjeta de crédito":
-                                tarCredito = Convert.ToDecimal(item[1].ToString());
-                                break;
-                            case "Crédito":
-                                credito = Convert.ToDecimal(item[1].ToString());
+                        
+                        //switch (item[0].ToString())
+                        //{
+                        //    case"Efectivo":                                
+                        //        venTotEfectivo = Convert.ToDecimal(item[1].ToString());
+                        //        break;
+                        //    case "Tarjeta de crédito":
+                        //        tarCredito = Convert.ToDecimal(item[1].ToString());
+                        //        break;
+                        //    case "Crédito":
+                        //        credito = Convert.ToDecimal(item[1].ToString());
 
-                                break;
-                            case "Tarjeta de débito":
-                                tarDebito = Convert.ToDecimal(item[1].ToString());                                
-                                break;
-                            case "Transferencia":
-                                transferencia = Convert.ToDecimal(item[1].ToString());
-                               
-                                break;
-                            default:
-                                break;
-                        }
+                        //        break;
+                        //    case "Tarjeta de débito":
+                        //        tarDebito = Convert.ToDecimal(item[1].ToString());                                
+                        //        break;
+                        //    case "Transferencia":
+                        //        transferencia = Convert.ToDecimal(item[1].ToString());
+
+                        //        break;
+                        //    default:
+                        //        break;
+                        //}
+                        metodos.Add(string.Format("{0}{1:C2}",item[0].ToString().PadRight(45 - item[0].ToString().Length), decimal.Parse(item[1].ToString())));
+                        metodos.Add(Environment.NewLine);
                     }
+                    lstMetodos.DataSource = metodos;
+
 
                     lblEfectivo.Text = efectivoCaja.ToString("N");
                     lblTransferencia.Text = transferencia.ToString("N");
